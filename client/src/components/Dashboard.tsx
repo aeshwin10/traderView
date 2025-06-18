@@ -112,8 +112,15 @@ const Dashboard: React.FC<DashboardProps> = ({ user, token, onLogout }) => {
               color={connected ? 'success' : 'error'}
               variant="outlined"
               size="small"
-              clickable={false}
-              sx={{ color: 'white', borderColor: 'white' }}
+              sx={{ 
+                color: 'white', 
+                borderColor: 'white',
+                pointerEvents: 'none',
+                cursor: 'default',
+                '&:hover': {
+                  backgroundColor: 'transparent'
+                }
+              }}
             />
             <Typography variant="body2">
               {user.email}
