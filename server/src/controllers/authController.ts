@@ -110,4 +110,15 @@ export const login = async (req: Request, res: Response): Promise<void> => {
     console.error('Login error:', error);
     res.status(500).json({ error: 'Internal server error' });
   }
+};
+
+// Debug endpoint to clear all users (for development only)
+export const clearAllUsers = async (req: Request, res: Response): Promise<void> => {
+  try {
+    await db.clearAllUsers();
+    res.json({ message: 'All users cleared successfully' });
+  } catch (error) {
+    console.error('Clear users error:', error);
+    res.status(500).json({ error: 'Failed to clear users' });
+  }
 }; 

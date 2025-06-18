@@ -221,6 +221,37 @@ class Database {
     });
   }
 
+  // Admin operations (for debugging)
+  async clearAllUsers(): Promise<void> {
+    return new Promise((resolve, reject) => {
+      // Delete in order due to foreign key constraints
+      this.db.serialize(() => {
+        this.db.run('DELETE FROM jwt_tokens', (err) => {
+          if (err) {
+            reject(err);
+            return;
+          }
+        });
+        
+        this.db.run('DELETE FROM subscriptions', (err) => {
+          if (err) {
+            reject(err);
+            return;
+          }
+        });
+        
+        this.db.run('DELETE FROM users', (err) => {
+          if (err) {
+            reject(err);
+          } else {
+            console.log('All users cleared from database');
+            resolve();
+          }
+        });
+      });
+    });
+  }
+
   async closeConnection(): Promise<void> {
     return new Promise((resolve, reject) => {
       this.db.close((err) => {
